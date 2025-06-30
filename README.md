@@ -1,4 +1,4 @@
-![Ravana](ravana-512.png)
+![Ravana](ravana.png)
 
 # Ravana AI Desktop App
 
