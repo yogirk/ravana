@@ -4,7 +4,7 @@
 
 Ravana is a cross-platform desktop application built with Electron that allows you to use multiple AI assistants like Gemini, ChatGPT, and Claude in a single, organized, tabbed interface. It currently supports Gemini, ChatGPT, Claude, NotebookLM, Meta AI, and Perplexity. 
 
-In Hindu mythology, Ravana's 10 heads are often interpreted as a symbol of his vast knowledge and wisdom. Ask your favourite LLM about Ravana to learn more :) 
+In Indian mythology, Ravana's 10 heads are often interpreted as a symbol of his vast knowledge and wisdom. Ask your favourite LLM about Ravana to learn more :) 
 
 ## Features
 
