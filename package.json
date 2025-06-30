@@ -1,0 +1,58 @@
+{
+  "name": "ravana",
+  "version": "1.0.0",
+  "description": "A desktop app for multiple AI assistants.",
+  "main": "src/main/main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "keywords": [
+    "Electron",
+    "AI",
+    "Gemini",
+    "ChatGPT",
+    "Claude"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^28.2.3",
+    "electron-builder": "^24.9.1"
+  },
+  "dependencies": {
+    "axios": "^1.6.8",
+    "electron-store": "^8.1.0",
+    "express": "^4.19.2"
+  },
+  "build": {
+    "appId": "com.yourcompany.ravana",
+    "productName": "Ravana",
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "package.json",
+      "config.example.json",
+      "config.json"
+    ],
+    "directories": {
+      "buildResources": "build",
+      "output": "dist"
+    },
+    "mac": {
+      "icon": "build/icons/icon.icns",
+      "target": "dmg",
+      "extendInfo": {
+        "NSBluetoothAlwaysUsageDescription": "Ravana needs Bluetooth access for authentication with hardware security keys on some services."
+      }
+    },
+    "win": {
+      "icon": "build/icons/icon.ico",
+      "target": "nsis"
+    },
+    "linux": {
+        "icon": "build/icons/icon.png"
+    }
+  }
+}
