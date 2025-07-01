@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, Menu, shell, session, webContents, dialog } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu, shell, session, webContents, dialog, clipboard } = require('electron');
 const path = require('path');
 const Store = require('electron-store');
 const express = require('express');
@@ -58,7 +58,9 @@ function createMainWindow() {
 
   mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'));
 
+  // --- Universal Google Auth & Link Handling ---
   mainWindow.webContents.on('did-attach-webview', (event, attachedWebContents) => {
+    // Handle popups (like third-party auth)
     attachedWebContents.setWindowOpenHandler(({ url }) => {
       const googleAuthUrlPattern = /accounts\.google\.com/;
       if (googleAuthUrlPattern.test(url)) {
@@ -67,6 +69,18 @@ function createMainWindow() {
       }
       shell.openExternal(url);
       return { action: 'deny' };
+    });
+
+    // Handle in-page link clicks
+    attachedWebContents.on('will-navigate', (event, navigationUrl) => {
+        const currentUrl = new URL(attachedWebContents.getURL());
+        const navigationTargetUrl = new URL(navigationUrl);
+
+        // If navigating away from the service's domain, open externally
+        if (navigationTargetUrl.hostname !== currentUrl.hostname) {
+            event.preventDefault();
+            shell.openExternal(navigationUrl);
+        }
     });
   });
 
@@ -165,16 +179,27 @@ ipcMain.on('settings-updated', (event, selectedServices) => {
     store.set('selectedServices', selectedServices);
     if (mainWindow) mainWindow.webContents.send('reload-services');
 });
-ipcMain.on('show-context-menu', (event, webContentsId) => {
+
+// UPDATED: Context Menu Handler
+ipcMain.on('show-context-menu', (event, webContentsId, params) => {
     const targetWebContents = webContents.fromId(webContentsId);
     if (targetWebContents) {
-        const contextMenu = Menu.buildFromTemplate([
+        const template = [];
+
+        if (params.linkURL) {
+            template.push({ label: 'Copy Link Address', click: () => clipboard.writeText(params.linkURL) });
+            template.push({ type: 'separator' });
+        }
+
+        template.push(
             { label: 'Go Back', enabled: targetWebContents.canGoBack(), click: () => targetWebContents.goBack() },
             { label: 'Go Forward', enabled: targetWebContents.canGoForward(), click: () => targetWebContents.goForward() },
             { label: 'Reload', click: () => targetWebContents.reload() },
             { type: 'separator' },
             { label: 'Inspect Element', click: () => targetWebContents.openDevTools() }
-        ]);
+        );
+
+        const contextMenu = Menu.buildFromTemplate(template);
         contextMenu.popup(BrowserWindow.fromWebContents(event.sender));
     }
 });

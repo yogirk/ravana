@@ -51,9 +51,10 @@ document.addEventListener('DOMContentLoaded', () => {
             closeTab(service.id);
         });
         
+        // UPDATED: Pass params to the context menu handler
         webview.addEventListener('context-menu', (e) => {
             e.preventDefault();
-            window.electronAPI.showContextMenu(webview.getWebContentsId());
+            window.electronAPI.showContextMenu(webview.getWebContentsId(), e.params);
         });
 
         return { tab, webview };

@@ -8,7 +8,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   openSettingsWindow: () => ipcRenderer.send('open-settings-window'),
   closeSettingsWindow: () => ipcRenderer.send('close-settings-window'),
   settingsUpdated: (services) => ipcRenderer.send('settings-updated', services),
-  showContextMenu: (webContentsId) => ipcRenderer.send('show-context-menu', webContentsId),
+  showContextMenu: (webContentsId, params) => ipcRenderer.send('show-context-menu', webContentsId, params), // UPDATED
 
   // Renderer to Main (two-way)
   getStoreData: (key) => ipcRenderer.invoke('get-store-data', key),
