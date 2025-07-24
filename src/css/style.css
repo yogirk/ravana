@@ -1,0 +1,216 @@
+/* src/css/style.css */
+
+/* --- CSS Variables for Theming --- */
+:root {
+    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --primary-color: #007aff;
+    --primary-color-hover: #0056b3;
+    --bg-color: #ffffff;
+    --bg-color-secondary: #f0f0f0;
+    --text-color: #1d1d1f;
+    --text-color-secondary: #6e6e73;
+    --border-color: #d2d2d7;
+    --border-radius: 12px;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --modal-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+html.dark-mode {
+    --primary-color: #0a84ff;
+    --primary-color-hover: #0060df;
+    --bg-color: #1c1c1e;
+    --bg-color-secondary: #2c2c2e;
+    --text-color: #f5f5f7;
+    --text-color-secondary: #8e8e93;
+    --border-color: #3a3a3c;
+}
+
+/* --- General Styles --- */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-family);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Class added during sidebar resize to prevent text selection */
+body.is-resizing {
+    cursor: col-resize;
+    user-select: none;
+}
+
+body.is-modal {
+    background-color: transparent;
+}
+
+.modal-wrapper {
+    background-color: var(--bg-color);
+    border-radius: var(--border-radius);
+    height: 100vh;
+    box-shadow: var(--modal-shadow);
+    -webkit-app-region: drag;
+}
+
+.container {
+    padding: 2rem;
+}
+
+.btn {
+    font-size: 0.9rem;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    -webkit-app-region: no-drag;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn-icon-only {
+    padding: 0.5rem;
+    width: 36px;
+    height: 36px;
+    background-color: var(--bg-color-secondary);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+}
+.btn-icon-only:hover {
+    background-color: var(--border-color);
+}
+.btn-icon-only svg {
+    width: 20px;
+    height: 20px;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+.btn-primary:hover {
+    background-color: var(--primary-color-hover);
+}
+
+.btn-secondary {
+    background-color: var(--bg-color-secondary);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+}
+.btn-secondary:hover {
+    background-color: var(--border-color);
+}
+
+.btn-icon {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.btn-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    background-color: var(--bg-color-secondary);
+    border: none;
+    border-radius: 50%;
+    color: var(--text-color-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s, color 0.2s;
+    -webkit-app-region: no-drag;
+}
+.btn-close:hover {
+    background-color: var(--border-color);
+    color: var(--text-color);
+}
+
+/* --- Onboarding / Settings Modal --- */
+.onboarding-container { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center; position: relative; -webkit-app-region: no-drag; }
+.onboarding-header h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
+.onboarding-header p { font-size: 1rem; color: var(--text-color-secondary); max-width: 500px; margin-bottom: 2rem; }
+.service-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; width: 100%; max-width: 700px; margin-bottom: 2.5rem; padding: 0 1rem; }
+.service-card { background-color: var(--bg-color-secondary); border: 2px solid var(--border-color); border-radius: var(--border-radius); padding: 1.5rem 1rem; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease-in-out; position: relative; }
+.service-card:hover { transform: translateY(-5px); border-color: var(--primary-color); }
+.service-card.selected { border-color: var(--primary-color); background-color: color-mix(in srgb, var(--primary-color) 10%, var(--bg-color-secondary)); }
+.service-logo { width: 48px; height: 48px; margin-bottom: 1rem; }
+.service-name { font-weight: 500; }
+.checkmark { position: absolute; top: 10px; right: 10px; width: 24px; height: 24px; background-color: var(--primary-color); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; opacity: 0; transform: scale(0.5); transition: all 0.2s ease-in-out; }
+.service-card.selected .checkmark { opacity: 1; transform: scale(1); }
+
+/* --- Main App Screen & Layouts --- */
+.app-container { display: flex; height: 100vh; }
+.webview-container { flex-grow: 1; position: relative; }
+
+/* Resize Handle */
+#resize-handle {
+    width: 3px;
+    cursor: col-resize;
+    background-color: transparent;
+    transition: background-color 0.2s;
+    -webkit-app-region: no-drag;
+}
+#resize-handle:hover { background-color: var(--primary-color); }
+.layout-top #resize-handle { display: none; }
+
+/* Default: Top Layout */
+.app-container.layout-top { flex-direction: column; }
+.app-container.layout-top .app-header { display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 1rem; background-color: var(--bg-color-secondary); border-bottom: 1px solid var(--border-color); flex-shrink: 0; -webkit-app-region: drag; }
+.app-container.layout-top .tab-nav { display: flex; gap: 0.5rem; -webkit-app-region: no-drag; }
+.app-container.layout-top .tab-item { padding: 0.6rem 1.2rem; gap: 0.75rem; }
+.app-container.layout-top .app-controls { display: flex; align-items: center; gap: 1rem; -webkit-app-region: no-drag; }
+.app-container.layout-top .app-controls-top-row { display: flex; align-items: center; gap: 1rem; }
+
+/* Side Layout */
+.app-container.layout-side { flex-direction: row; }
+.app-container.layout-side .app-header { display: flex; flex-direction: column; width: 80px; min-width: 72px; max-width: 300px; height: 100vh; padding: 1rem 0.5rem; background-color: var(--bg-color-secondary); flex-shrink: 0; -webkit-app-region: drag; }
+.app-container.layout-side .tab-nav { display: flex; flex-direction: column; gap: 0.25rem; -webkit-app-region: no-drag; }
+.app-container.layout-side .tab-item { width: 100%; justify-content: center; padding: 0.75rem 0.5rem; }
+.app-container.layout-side .tab-item span { display: none; }
+.app-container.layout-side .tab-logo { width: 24px; height: 24px; }
+.app-container.layout-side .app-controls { margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; flex-direction: column; align-items: center; gap: 0.75rem; -webkit-app-region: no-drag; }
+.app-container.layout-side .app-controls-top-row { display: contents; }
+.app-container.layout-side #settings-btn { padding: 0.5rem; width: 36px; height: 36px; }
+.app-container.layout-side #settings-btn span { display: none; }
+
+
+/* General Tab Styles */
+.tab-item { border: none; background-color: transparent; color: var(--text-color-secondary); font-size: 0.9rem; font-weight: 500; border-radius: var(--border-radius); cursor: pointer; transition: background-color 0.2s, color 0.2s; display: flex; align-items: center; }
+.tab-logo { width: 18px; height: 18px; }
+.tab-item:hover { background-color: var(--border-color); color: var(--text-color); }
+.tab-item.active { background-color: var(--bg-color); color: var(--primary-color); box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+
+/* --- Style for dragged tab --- */
+.tab-item.dragging {
+    opacity: 0.4;
+    background: var(--primary-color);
+}
+
+/* --- Webview & Theme Switch --- */
+.service-webview { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; visibility: hidden; opacity: 0; transition: opacity 0.3s, visibility 0.3s; }
+.service-webview.active { visibility: visible; opacity: 1; }
+.center-message { text-align: center; margin-top: 5rem; color: var(--text-color-secondary); }
+.theme-switch { position: relative; display: inline-block; width: 50px; height: 28px; }
+.theme-switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--border-color); transition: .4s; border-radius: 28px; }
+.slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+input:checked + .slider { background-color: var(--primary-color); }
+input:checked + .slider:before { transform: translateX(22px); }

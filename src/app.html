@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' asset:;">
+    <title>Ravana, Your AI Assistant Hub</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app-container" class="app-container">
+        <!-- The header becomes the sidebar in side-layout mode -->
+        <header class="app-header">
+            <nav id="tab-nav" class="tab-nav">
+                <!-- Tabs will be dynamically inserted here -->
+            </nav>
+            <div class="app-controls">
+                <!-- New wrapper for the top row of controls -->
+                <div class="app-controls-top-row">
+                    <button id="layout-switch-btn" class="btn btn-icon-only" title="Switch Layout"></button>
+                    <label class="theme-switch">
+                        <input type="checkbox" id="theme-toggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <button id="settings-btn" class="btn btn-secondary">
+                    <!-- Icon and text will be inserted by app.js -->
+                </button>
+            </div>
+        </header>
+
+        <!-- This handle is only visible in side-layout mode -->
+        <div id="resize-handle"></div>
+
+        <main id="webview-container" class="webview-container">
+            <!-- Webviews will be dynamically inserted here -->
+        </main>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
