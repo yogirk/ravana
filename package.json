@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A central hub to access multiple AI web services in a clean, tabbed interface.",
   "main": "main.js",
-  "author": "RK Kuppala and Gemini",
+  "author": "Your Name",
   "license": "MIT",
   "scripts": {
     "start": "electron .",
