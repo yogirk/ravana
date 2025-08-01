@@ -1,7 +1,7 @@
 ![Ravana](ravana.png)
 
 > [!NOTE]
-> **Visit Ravana App's website : [ravana.app](https://ravana.app/** 
+> **Visit Ravana App's website : [ravana.app](https://ravana.app/)** 
 
 
 # Ravana: An Integrated AI Services Hub
