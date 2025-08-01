@@ -1,5 +1,9 @@
 ![Ravana](ravana.png)
 
+ [!NOTE]
+**Visit the app's website : [ravana.app](https://yogirk.github.io/ravana/)** 
+
+
 # Ravana: An Integrated AI Services Hub
 
 Ravana is a cross-platform desktop application built with Electron that allows you to use multiple AI assistants like Gemini, ChatGPT, and Claude in a single, organized, tabbed interface. It currently supports Gemini, ChatGPT, Claude, NotebookLM, Meta AI, and Perplexity. 
