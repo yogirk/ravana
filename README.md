@@ -1,7 +1,7 @@
 ![Ravana](ravana.png)
 
  [!NOTE]
-**Visit the app's website : [ravana.app](https://yogirk.github.io/ravana/)** 
+**Visit Ravana App's website : [ravana.app](https://yogirk.github.io/ravana/)** 
 
 
 # Ravana: An Integrated AI Services Hub
