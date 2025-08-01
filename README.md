@@ -58,30 +58,27 @@ npm run dist
 
 ```bash
 ravana/
-├── docs/
+├── docs/                   # GitHub Pages website
+│   ├── assets/             # Site assets (images, logos)
+│   ├── index.html          # Main landing page HTML
+│   ├── script.js           # Landing page JavaScript
+│   └── style.css           # Landing page CSS
+├── src/                    # Application source code
 │   ├── assets/
-│   │   ├── icon.png
-│   │   ├── logos/
-│   │   └── ravana.png
-│   ├── index.html
-│   ├── script.js
-│   └── style.css
-├── src/
-│   ├── assets/
-│   │   └── logos/
+│   │   └── logos/          # SVG logos for AI services
 │   ├── css/
-│   │   └── style.css
+│   │   └── style.css       # All application styles and themes
 │   ├── js/
-│   │   ├── app.js
-│   │   └── onboarding.js
-│   ├── app.html
-│   ├── onboarding.html
-│   └── preload.js
-├── .gitignore
-├── main.js
-├── package.json
-├── ravana.png
-└── README.md
+│   │   ├── app.js          # Renderer process logic for the main application window
+│   │   └── onboarding.js   # Renderer process logic for the settings/onboarding modal
+│   ├── app.html            # Main application user interface
+│   ├── onboarding.html     # Onboarding/Settings user interface
+│   └── preload.js          # Secure bridge between the main and renderer processes
+├── .gitignore              # Git ignore file
+├── main.js                 # The Electron main process entry point
+├── package.json            # Project metadata, dependencies, and build scripts
+├── ravana.png              # Main image for README
+└── README.md               # This file
 ```
 
 _This application was developed with the assistance of *Gemini*_.
