@@ -13,8 +13,13 @@ contextBridge.exposeInMainWorld('electronAPI', {
     openSettings: () => ipcRenderer.send('open-settings'),
     setTheme: (theme) => ipcRenderer.send('set-theme', theme),
     setLayout: (layout) => ipcRenderer.send('set-layout', layout),
+    setActiveService: (serviceId) => ipcRenderer.send('set-active-service', serviceId),
+    setSidebarWidth: (width) => ipcRenderer.send('set-sidebar-width', width),
 
     // New in Iteration 7
     saveServiceOrder: (services) => ipcRenderer.send('save-service-order', services),
     showWebviewContextMenu: (webContentsId) => ipcRenderer.send('show-webview-context-menu', webContentsId),
+
+    // Utilities
+    clearServiceStorage: (serviceId) => ipcRenderer.invoke('clear-service-storage', serviceId),
 });

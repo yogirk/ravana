@@ -11,7 +11,8 @@
     "dist": "electron-builder"
   },
   "dependencies": {
-    "electron-store": "^8.2.0"
+    "electron-store": "^8.2.0",
+    "sortablejs": "^1.15.6"
   },
   "devDependencies": {
     "electron": "^29.1.5",

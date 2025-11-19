@@ -1,99 +1,138 @@
 /* src/css/style.css */
 
-/* --- CSS Variables for Theming --- */
+/* --- CSS Variables & Design System --- */
 :root {
-    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    --primary-color: #007aff;
-    --primary-color-hover: #0056b3;
-    --bg-color: #ffffff;
-    --bg-color-secondary: #f0f0f0;
-    --text-color: #1d1d1f;
-    --text-color-secondary: #6e6e73;
-    --border-color: #d2d2d7;
-    --border-radius: 12px;
-    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    --modal-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    /* Typography */
+    --font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+
+    /* Colors - Light Mode */
+    --primary-color: #4f46e5;
+    /* Indigo-600 - More vibrant/modern than standard blue */
+    --primary-color-hover: #4338ca;
+    --primary-color-subtle: rgba(79, 70, 229, 0.1);
+
+    --bg-app: #f3f4f6;
+    /* Light gray background for the main window */
+    --bg-glass: rgba(240, 242, 245, 0.85);
+    /* Slightly darker/grayer for better contrast with white active tab */
+    --bg-glass-hover: rgba(255, 255, 255, 0.9);
+    --bg-surface: #ffffff;
+
+    --text-primary: #111827;
+    --text-secondary: #6b7280;
+    --text-tertiary: #9ca3af;
+
+    --border-color: rgba(229, 231, 235, 0.8);
+    --border-glass: rgba(255, 255, 255, 0.5);
+
+    /* Effects */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --glass-blur: blur(12px);
+
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-full: 9999px;
+
+    --transition-base: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 html.dark-mode {
-    --primary-color: #0a84ff;
-    --primary-color-hover: #0060df;
-    --bg-color: #1c1c1e;
-    --bg-color-secondary: #2c2c2e;
-    --text-color: #f5f5f7;
-    --text-color-secondary: #8e8e93;
-    --border-color: #3a3a3c;
+    /* Colors - Dark Mode */
+    --primary-color: #6366f1;
+    /* Indigo-500 */
+    --primary-color-hover: #818cf8;
+    --primary-color-subtle: rgba(99, 102, 241, 0.15);
+
+    --bg-app: #0f172a;
+    /* Slate-900 */
+    --bg-glass: rgba(30, 41, 59, 0.7);
+    /* Slate-800 with opacity */
+    --bg-glass-hover: rgba(30, 41, 59, 0.9);
+    --bg-surface: #1e293b;
+
+    --text-primary: #f3f4f6;
+    --text-secondary: #94a3b8;
+    --text-tertiary: #64748b;
+
+    --border-color: rgba(51, 65, 85, 0.8);
+    --border-glass: rgba(255, 255, 255, 0.1);
+
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
 }
 
-/* --- General Styles --- */
-*, *::before, *::after {
+/* --- Global Reset & Base Styles --- */
+*,
+*::before,
+*::after {
     box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-body, html {
+body,
+html {
     margin: 0;
     padding: 0;
     font-family: var(--font-family);
-    background-color: var(--bg-color);
-    color: var(--text-color);
+    background-color: var(--bg-app);
+    color: var(--text-primary);
     height: 100vh;
     width: 100vw;
     overflow: hidden;
-    transition: background-color 0.3s, color 0.3s;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Class added during sidebar resize to prevent text selection */
-body.is-resizing {
-    cursor: col-resize;
-    user-select: none;
+/* --- Utilities --- */
+.hidden {
+    display: none !important;
 }
 
-body.is-modal {
-    background-color: transparent;
-}
+/* --- Components --- */
 
-.modal-wrapper {
-    background-color: var(--bg-color);
-    border-radius: var(--border-radius);
-    height: 100vh;
-    box-shadow: var(--modal-shadow);
-    -webkit-app-region: drag;
-}
-
-.container {
-    padding: 2rem;
-}
-
+/* Buttons */
 .btn {
-    font-size: 0.9rem;
-    padding: 0.6rem 1.2rem;
-    border: none;
-    border-radius: var(--border-radius);
+    font-size: 0.875rem;
+    font-weight: var(--font-weight-medium);
+    padding: 0.5rem 1rem;
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
     cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.2s, transform 0.1s;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
+    transition: var(--transition-base);
     -webkit-app-region: no-drag;
+    outline: none;
 }
 
 .btn:active {
-    transform: scale(0.98);
+    transform: scale(0.97);
 }
 
 .btn-icon-only {
-    padding: 0.5rem;
+    padding: 0;
     width: 36px;
     height: 36px;
-    background-color: var(--bg-color-secondary);
-    color: var(--text-color);
-    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    background-color: transparent;
+    color: var(--text-secondary);
+    border: 1px solid transparent;
 }
+
 .btn-icon-only:hover {
-    background-color: var(--border-color);
+    background-color: var(--bg-glass-hover);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-sm);
 }
+
 .btn-icon-only svg {
     width: 20px;
     height: 20px;
@@ -102,115 +141,486 @@ body.is-modal {
 .btn-primary {
     background-color: var(--primary-color);
     color: white;
+    box-shadow: var(--shadow-md);
 }
+
 .btn-primary:hover {
     background-color: var(--primary-color-hover);
+    box-shadow: var(--shadow-lg);
 }
 
 .btn-secondary {
-    background-color: var(--bg-color-secondary);
-    color: var(--text-color);
+    background-color: var(--bg-glass);
+    color: var(--text-primary);
     border: 1px solid var(--border-color);
+    backdrop-filter: var(--glass-blur);
 }
+
 .btn-secondary:hover {
-    background-color: var(--border-color);
+    background-color: var(--bg-glass-hover);
+    border-color: var(--text-tertiary);
 }
 
-.btn-icon {
-    display: inline-block;
-    vertical-align: middle;
-}
+/* Theme Switch */
+/* --- Theme Switch (Deprecated - using button now) --- */
+/* Styles removed as we switched to a button */
 
-.btn-close {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    width: 32px;
-    height: 32px;
-    background-color: var(--bg-color-secondary);
-    border: none;
-    border-radius: 50%;
-    color: var(--text-color-secondary);
-    cursor: pointer;
+/* --- Layout Structure --- */
+.app-container {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.2s, color 0.2s;
-    -webkit-app-region: no-drag;
-}
-.btn-close:hover {
-    background-color: var(--border-color);
-    color: var(--text-color);
+    height: 100vh;
+    background: radial-gradient(circle at top left, var(--primary-color-subtle), transparent 40%),
+        radial-gradient(circle at bottom right, var(--primary-color-subtle), transparent 40%);
 }
 
-/* --- Onboarding / Settings Modal --- */
-.onboarding-container { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center; position: relative; -webkit-app-region: no-drag; }
-.onboarding-header h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
-.onboarding-header p { font-size: 1rem; color: var(--text-color-secondary); max-width: 500px; margin-bottom: 2rem; }
-.service-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; width: 100%; max-width: 700px; margin-bottom: 2.5rem; padding: 0 1rem; }
-.service-card { background-color: var(--bg-color-secondary); border: 2px solid var(--border-color); border-radius: var(--border-radius); padding: 1.5rem 1rem; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease-in-out; position: relative; }
-.service-card:hover { transform: translateY(-5px); border-color: var(--primary-color); }
-.service-card.selected { border-color: var(--primary-color); background-color: color-mix(in srgb, var(--primary-color) 10%, var(--bg-color-secondary)); }
-.service-logo { width: 48px; height: 48px; margin-bottom: 1rem; }
-.service-name { font-weight: 500; }
-.checkmark { position: absolute; top: 10px; right: 10px; width: 24px; height: 24px; background-color: var(--primary-color); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; opacity: 0; transform: scale(0.5); transition: all 0.2s ease-in-out; }
-.service-card.selected .checkmark { opacity: 1; transform: scale(1); }
-
-/* --- Main App Screen & Layouts --- */
-.app-container { display: flex; height: 100vh; }
-.webview-container { flex-grow: 1; position: relative; }
+.webview-container {
+    flex-grow: 1;
+    position: relative;
+    background-color: var(--bg-surface);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    /* In side layout, this will get rounded corners */
+    transition: var(--transition-base);
+}
 
 /* Resize Handle */
 #resize-handle {
-    width: 3px;
+    width: 4px;
     cursor: col-resize;
     background-color: transparent;
     transition: background-color 0.2s;
     -webkit-app-region: no-drag;
+    z-index: 50;
 }
-#resize-handle:hover { background-color: var(--primary-color); }
-.layout-top #resize-handle { display: none; }
 
-/* Default: Top Layout */
-.app-container.layout-top { flex-direction: column; }
-.app-container.layout-top .app-header { display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 1rem; background-color: var(--bg-color-secondary); border-bottom: 1px solid var(--border-color); flex-shrink: 0; -webkit-app-region: drag; }
-.app-container.layout-top .tab-nav { display: flex; gap: 0.5rem; -webkit-app-region: no-drag; }
-.app-container.layout-top .tab-item { padding: 0.6rem 1.2rem; gap: 0.75rem; }
-.app-container.layout-top .app-controls { display: flex; align-items: center; gap: 1rem; -webkit-app-region: no-drag; }
-.app-container.layout-top .app-controls-top-row { display: flex; align-items: center; gap: 1rem; }
+#resize-handle:hover,
+body.is-resizing #resize-handle {
+    background-color: var(--primary-color);
+}
 
-/* Side Layout */
-.app-container.layout-side { flex-direction: row; }
-.app-container.layout-side .app-header { display: flex; flex-direction: column; width: 80px; min-width: 72px; max-width: 300px; height: 100vh; padding: 1rem 0.5rem; background-color: var(--bg-color-secondary); flex-shrink: 0; -webkit-app-region: drag; }
-.app-container.layout-side .tab-nav { display: flex; flex-direction: column; gap: 0.25rem; -webkit-app-region: no-drag; }
-.app-container.layout-side .tab-item { width: 100%; justify-content: center; padding: 0.75rem 0.5rem; }
-.app-container.layout-side .tab-item span { display: none; }
-.app-container.layout-side .tab-logo { width: 24px; height: 24px; }
-.app-container.layout-side .app-controls { margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; flex-direction: column; align-items: center; gap: 0.75rem; -webkit-app-region: no-drag; }
-.app-container.layout-side .app-controls-top-row { display: contents; }
-.app-container.layout-side #settings-btn { padding: 0.5rem; width: 36px; height: 36px; }
-.app-container.layout-side #settings-btn span { display: none; }
+/* --- Top Layout --- */
+.app-container.layout-top {
+    flex-direction: column;
+}
 
+.app-container.layout-top .app-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--bg-glass);
+    backdrop-filter: var(--glass-blur);
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+    -webkit-app-region: drag;
+    z-index: 10;
+}
 
-/* General Tab Styles */
-.tab-item { border: none; background-color: transparent; color: var(--text-color-secondary); font-size: 0.9rem; font-weight: 500; border-radius: var(--border-radius); cursor: pointer; transition: background-color 0.2s, color 0.2s; display: flex; align-items: center; }
-.tab-logo { width: 18px; height: 18px; }
-.tab-item:hover { background-color: var(--border-color); color: var(--text-color); }
-.tab-item.active { background-color: var(--bg-color); color: var(--primary-color); box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.app-container.layout-top .tab-nav {
+    display: flex;
+    gap: 0.5rem;
+    -webkit-app-region: no-drag;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 2px;
+    scrollbar-width: none;
+    /* Firefox */
+}
 
-/* --- Style for dragged tab --- */
+.app-container.layout-top .tab-nav::-webkit-scrollbar {
+    display: none;
+    /* Chrome/Safari */
+}
+
+.app-container.layout-top .tab-item {
+    padding: 0.5rem 1rem;
+    gap: 0.5rem;
+    border-radius: var(--radius-full);
+}
+
+.app-container.layout-top .app-controls {
+    display: flex;
+    align-items: center;
+    -webkit-app-region: no-drag;
+}
+
+.controls-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--bg-surface);
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+}
+
+/* --- Side Layout --- */
+.app-container.layout-side {
+    flex-direction: row;
+}
+
+.app-container.layout-side .app-header {
+    display: flex;
+    flex-direction: column;
+    width: 96px;
+    /* Default, overridden by JS */
+    min-width: 72px;
+    max-width: 320px;
+    height: 100vh;
+    padding: 1.5rem 0.75rem;
+    background-color: var(--bg-glass);
+    backdrop-filter: var(--glass-blur);
+    border-right: 1px solid var(--border-color);
+    flex-shrink: 0;
+    -webkit-app-region: drag;
+    z-index: 10;
+}
+
+.app-container.layout-side .tab-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    -webkit-app-region: no-drag;
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 0.25rem;
+}
+
+.app-container.layout-side .tab-item {
+    width: 100%;
+    justify-content: flex-start;
+    /* Align left for text */
+    padding: 0.75rem;
+    border-radius: var(--radius-md);
+}
+
+/* Collapsed state logic for side layout tabs */
+/* If width is small (< 180px approx), hide text and center icons */
+.app-container.layout-side .app-header[style*="width:"] .tab-item span {
+    opacity: 1;
+    transition: opacity 0.2s;
+}
+
+/* We'll use a class 'sidebar-collapsed' toggled by JS for better control, 
+   but for now, let's stick to the previous CSS-only approach or improve it. 
+   The previous CSS hid span based on layout-side. Let's make it responsive to width if possible, 
+   or just keep it simple: Icon only if very narrow, Icon+Text if wide. 
+   Actually, the previous CSS just HID text always in side layout. 
+   Let's IMPROVE this: Show text if sidebar is wide enough. 
+   Since we can't use container queries easily without a wrapper, we'll rely on JS or just hide for now 
+   and let the user resize. 
+   Wait, the previous CSS was: .app-container.layout-side .tab-item span { display: none; }
+   Let's change that to be visible but clipped if narrow.
+*/
+.app-container.layout-side .tab-item {
+    overflow: hidden;
+}
+
+.app-container.layout-side .tab-item span {
+    white-space: nowrap;
+    margin-left: 0.5rem;
+    opacity: 0;
+    /* Hidden by default in narrow mode to match previous behavior, but we want to enable it */
+    display: none;
+    /* Start hidden, JS can toggle a class or we can use media queries if we knew the width */
+}
+
+/* Let's stick to the previous behavior for now (Icon only) to ensure stability, 
+   but style the icon-only tabs beautifully. */
+.app-container.layout-side .tab-item {
+    justify-content: center;
+}
+
+.app-container.layout-side .tab-item span {
+    display: none;
+}
+
+.app-container.layout-side .app-controls {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    -webkit-app-region: no-drag;
+    width: 100%;
+    /* Ensure full width for centering */
+    overflow: visible;
+    /* Allow tooltips or shadows if needed, but mainly ensure content isn't clipped */
+}
+
+.app-container.layout-side .controls-group {
+    flex-direction: column;
+    width: auto;
+    padding: 0.5rem 0.25rem;
+    gap: 0.75rem;
+    border-radius: var(--radius-full);
+}
+
+/* Hide settings text if sidebar is too narrow */
+.app-container.layout-side .app-controls .btn span {
+    display: none;
+}
+
+/* Show text only if we have enough space (approx > 150px), handled by JS toggling a class or just keep it icon-only for consistency in vertical mode as requested by user "rethink" */
+/* User said "settings button comes out of bounds". The safest bet for a vertical sidebar that can be narrow is icon-only or icon+text only when wide. 
+   Let's make the settings button icon-only by default in side layout to match the "clean" look, or adapt. 
+   Given the user's image showing it overflowing, let's force icon-only for the settings button in side layout unless we add a specific "expanded" class. 
+   Actually, let's just make it icon-only in side layout to be safe and clean. */
+.app-container.layout-side #settings-btn {
+    padding: 0.5rem;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-md);
+    justify-content: center;
+}
+
+.app-container.layout-side #settings-btn span {
+    display: none;
+}
+
+.app-container.layout-side .app-controls-top-row {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* --- Tab Styling --- */
+.tab-item {
+    position: relative;
+    border: none;
+    background-color: transparent;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: var(--transition-base);
+    display: flex;
+    align-items: center;
+    user-select: none;
+}
+
+.tab-logo {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    /* Slight rounding for logos */
+    transition: transform 0.2s;
+}
+
+.tab-item:hover {
+    background-color: var(--bg-glass-hover);
+    color: var(--text-primary);
+}
+
+.tab-item:hover .tab-logo {
+    transform: scale(1.1);
+}
+
+.tab-item.active {
+    background-color: var(--bg-surface);
+    color: var(--primary-color);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Add a subtle indicator for active state */
+.tab-item.active::before {
+    content: '';
+    position: absolute;
+    background-color: var(--primary-color);
+    border-radius: var(--radius-full);
+}
+
+/* Indicator positioning based on layout */
+.app-container.layout-top .tab-item.active::before {
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 3px;
+    display: block;
+    background-color: var(--primary-color);
+    border-radius: var(--radius-full);
+}
+
+.app-container.layout-side .tab-item.active::before {
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 20px;
+    border-radius: 0 var(--radius-full) var(--radius-full) 0;
+}
+
 .tab-item.dragging {
-    opacity: 0.4;
-    background: var(--primary-color);
+    opacity: 0.5;
+    background: var(--bg-glass);
+    border: 1px dashed var(--primary-color);
 }
 
-/* --- Webview & Theme Switch --- */
-.service-webview { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; visibility: hidden; opacity: 0; transition: opacity 0.3s, visibility 0.3s; }
-.service-webview.active { visibility: visible; opacity: 1; }
-.center-message { text-align: center; margin-top: 5rem; color: var(--text-color-secondary); }
-.theme-switch { position: relative; display: inline-block; width: 50px; height: 28px; }
-.theme-switch input { opacity: 0; width: 0; height: 0; }
-.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--border-color); transition: .4s; border-radius: 28px; }
-.slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
-input:checked + .slider { background-color: var(--primary-color); }
-input:checked + .slider:before { transform: translateX(22px); }
+/* SortableJS Classes */
+.sortable-ghost {
+    opacity: 0.4;
+    background-color: var(--primary-color-subtle);
+    border: 1px dashed var(--primary-color);
+}
+
+.sortable-drag {
+    cursor: grabbing;
+    opacity: 1;
+    background-color: var(--bg-surface);
+    box-shadow: var(--shadow-lg);
+    transform: scale(1.05);
+}
+
+/* --- Webviews --- */
+.service-webview {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s;
+    background-color: #fff;
+    /* Ensure white bg while loading */
+}
+
+.service-webview.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* --- Onboarding / Settings Modal --- */
+.onboarding-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    background-color: var(--bg-app);
+    color: var(--text-primary);
+    -webkit-app-region: no-drag;
+}
+
+.onboarding-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--primary-color), #818cf8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.onboarding-header p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 500px;
+    margin-bottom: 3rem;
+    line-height: 1.5;
+}
+
+.service-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 800px;
+    padding: 0 2rem;
+    margin-bottom: 3rem;
+}
+
+.service-card {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition-base);
+    position: relative;
+    box-shadow: var(--shadow-sm);
+}
+
+.service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-color);
+}
+
+.service-card.selected {
+    border-color: var(--primary-color);
+    background-color: var(--primary-color-subtle);
+    box-shadow: var(--shadow-md);
+}
+
+.service-logo {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+}
+
+.service-name {
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+}
+
+.checkmark {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 24px;
+    height: 24px;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: var(--transition-base);
+}
+
+.service-card.selected .checkmark {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.center-message {
+    text-align: center;
+    margin-top: 20%;
+    color: var(--text-tertiary);
+    font-size: 1.1rem;
+}
+
+/* --- Scrollbar Styling --- */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--text-tertiary);
+    border-radius: 4px;
+    opacity: 0.5;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
