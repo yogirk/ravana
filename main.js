@@ -103,6 +103,7 @@ function getAllowedHostsForSelectedServices() {
     return hosts;
 }
 
+/*
 function configureGeminiSession() {
     if (configureGeminiSession.hasConfigured) {
         return;
@@ -142,6 +143,7 @@ function configureGeminiSession() {
         callback({ cancel: false, requestHeaders });
     });
 }
+*/
 
 app.whenReady().then(() => {
     protocol.registerFileProtocol('asset', (request, callback) => {
@@ -150,7 +152,7 @@ app.whenReady().then(() => {
         callback({ path: filePath });
     });
 
-    configureGeminiSession();
+    // configureGeminiSession();
     createMainWindow();
 });
 
@@ -173,7 +175,7 @@ function createMainWindow() {
     });
 
     mainWindow.loadFile(path.join(__dirname, 'src', entryFile));
-    
+
     mainWindow.once('ready-to-show', () => {
         mainWindow.show();
     });
@@ -250,7 +252,8 @@ ipcMain.handle('get-initial-data', () => {
         theme: store.get('theme', 'light') === 'dark' ? 'dark' : 'light',
         layout: store.get('layout', 'top') === 'side' ? 'side' : 'top',
         sidebarWidth: Math.max(72, Number(store.get('sidebarWidth', DEFAULT_SIDEBAR_WIDTH)) || DEFAULT_SIDEBAR_WIDTH),
-        lastActiveServiceId: allowedIds.has(lastActiveServiceId) ? lastActiveServiceId : null
+        lastActiveServiceId: allowedIds.has(lastActiveServiceId) ? lastActiveServiceId : null,
+        availableServices: Object.values(SERVICE_MANIFEST)
     };
 });
 

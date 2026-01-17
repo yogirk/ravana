@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const header = document.querySelector('.onboarding-header h1');
     const subheader = document.querySelector('.onboarding-header p');
 
+    /* 
     const availableServices = [
         { id: 'gemini', name: 'Gemini', url: 'https://gemini.google.com/', logo: 'asset://logos/gemini.svg' },
         { id: 'chatgpt', name: 'ChatGPT', url: 'https://chat.openai.com/', logo: 'asset://logos/openai.svg' },
@@ -15,8 +16,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         { id: 'perplexity', name: 'Perplexity', url: 'https://www.perplexity.ai/', logo: 'asset://logos/perplexity.svg' },
         { id: 'metaai', name: 'Meta AI', url: 'https://www.meta.ai/', logo: 'asset://logos/meta-ai.svg' }
     ];
+    */
 
     const initialData = await window.electronAPI.getInitialData();
+    const availableServices = initialData.availableServices || [];
     const previouslySelectedServices = initialData.services || [];
     const previouslySelectedIds = new Set(previouslySelectedServices.map(s => s.id));
 
@@ -36,7 +39,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             <span class="service-name">${service.name}</span>
             <div class="checkmark">✓</div>
         `;
-        
+
         if (previouslySelectedIds.has(service.id)) {
             card.classList.add('selected');
         }
@@ -51,7 +54,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Handle the "Save" or "Continue" button click
     continueBtn.addEventListener('click', () => {
         const selectedCards = document.querySelectorAll('.service-card.selected');
-        
+
         const selectedServices = Array.from(selectedCards).map(card => {
             const serviceId = card.dataset.serviceId;
             return availableServices.find(s => s.id === serviceId);
